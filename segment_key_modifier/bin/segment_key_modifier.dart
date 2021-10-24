@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:args/args.dart';
 import 'package:segment_key_modifier/segment_key_modifier.dart';
 
@@ -13,11 +15,15 @@ final ArgParser argParser = ArgParser()
   );
 
 void main(List<String> args) {
-  final parsedArguments = argParser.parse(args);
-  final flavor = parsedArguments[targetEnv];
-  if (flavor.contains(test)) {
-    SegmentKeyModifier(test).modifyKeys();
-  } else if (flavor.contains(prod)) {
-    SegmentKeyModifier(prod).modifyKeys();
+  try {
+    final parsedArguments = argParser.parse(args);
+    final flavor = parsedArguments[targetEnv];
+    if (flavor.contains(test)) {
+      SegmentKeyModifier(test).modifyKeys();
+    } else if (flavor.contains(prod)) {
+      SegmentKeyModifier(prod).modifyKeys();
+    }
+  } catch (e) {
+    log(e.toString());
   }
 }
