@@ -14,7 +14,7 @@ class SegmentKeyModifier {
 
   void modifyKeys() async {
     final fileContents = await _fileRepository.readFileAsLineByline(
-      _configPath,
+      _fileRepository.writeKeyPath,
     );
     _parseWriteKey(fileContents);
     await _modifyKeysInAndroid(writeKey);
@@ -70,7 +70,4 @@ class SegmentKeyModifier {
       }
     }
   }
-
-  String get _configPath =>
-      "${_fileRepository.writeKeyPath}/ibb/$flavor/segment_config.json";
 }
